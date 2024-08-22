@@ -131,11 +131,13 @@ class ProductoController
         $this->conexion = null;
 
         if (!$resultado) {
+            // return json_encode(http_response_code(500));
             return json_encode(array(
                 "codigo" => 500,
-                "mensaje" => "Error al Registrar Producto",
+                "mensaje" => "Producto No Registrado",
             ));
         } else {
+            // http_response_code(200); 
             return json_encode(array(
                 "codigo" => 200,
                 "mensaje" => "Producto Registrado",
