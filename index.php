@@ -33,6 +33,7 @@ if ($numero_rutas == 1) {
         $rutas_filtro[2] == 'marca'
         || $rutas_filtro[2] == 'categoria'
         || $rutas_filtro[2] == 'producto'
+        || $rutas_filtro[2] == 'cliente'
     ) {
         require_once 'api/' . $rutas_filtro[2] . '.api.php';
     } else {
