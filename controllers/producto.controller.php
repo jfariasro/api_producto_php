@@ -1,7 +1,5 @@
 <?php
 
-require_once 'config/conexion.php';
-
 class ProductoController
 {
     private $conexion;

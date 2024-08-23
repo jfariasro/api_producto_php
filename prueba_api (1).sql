@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 23-08-2024 a las 16:55:23
+-- Tiempo de generación: 23-08-2024 a las 22:14:16
 -- Versión del servidor: 8.0.30
 -- Versión de PHP: 8.1.10
 
@@ -50,6 +50,28 @@ INSERT INTO `categoria` (`idcategoria`, `nombre`, `descripcion`) VALUES
 (8, 'Electrodomésticos de cocina', 'Electrodomésticos específicos para preparar alimentos.'),
 (9, 'Electrodomésticos de cuidado personal', 'Electrodomésticos para el cuidado personal y bienestar.'),
 (10, 'Entretenimiento', 'Electrodomésticos relacionados con el entretenimiento en el hogar.');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `cliente`
+--
+
+CREATE TABLE `cliente` (
+  `idcliente` int NOT NULL,
+  `cedula` varchar(10) NOT NULL,
+  `razonsocial` varchar(100) NOT NULL,
+  `fechanacimiento` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `edad` int NOT NULL,
+  `idtipocliente` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Volcado de datos para la tabla `cliente`
+--
+
+INSERT INTO `cliente` (`idcliente`, `cedula`, `razonsocial`, `fechanacimiento`, `edad`, `idtipocliente`) VALUES
+(1, '0958986804', 'Jose Farias Romero', '1997-04-24 22:03:26', 27, 1);
 
 -- --------------------------------------------------------
 
@@ -135,6 +157,13 @@ CREATE TABLE `tipocliente` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
+-- Volcado de datos para la tabla `tipocliente`
+--
+
+INSERT INTO `tipocliente` (`idtipocliente`, `nombre`, `descripcion`) VALUES
+(1, 'Mayorista', 'Cliente Especial, Mayor numero de descuento');
+
+--
 -- Índices para tablas volcadas
 --
 
@@ -143,6 +172,12 @@ CREATE TABLE `tipocliente` (
 --
 ALTER TABLE `categoria`
   ADD PRIMARY KEY (`idcategoria`);
+
+--
+-- Indices de la tabla `cliente`
+--
+ALTER TABLE `cliente`
+  ADD PRIMARY KEY (`idcliente`);
 
 --
 -- Indices de la tabla `marca`
@@ -175,6 +210,12 @@ ALTER TABLE `categoria`
   MODIFY `idcategoria` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
+-- AUTO_INCREMENT de la tabla `cliente`
+--
+ALTER TABLE `cliente`
+  MODIFY `idcliente` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT de la tabla `marca`
 --
 ALTER TABLE `marca`
@@ -190,7 +231,7 @@ ALTER TABLE `producto`
 -- AUTO_INCREMENT de la tabla `tipocliente`
 --
 ALTER TABLE `tipocliente`
-  MODIFY `idtipocliente` int NOT NULL AUTO_INCREMENT;
+  MODIFY `idtipocliente` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

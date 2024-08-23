@@ -10,6 +10,9 @@ require_once 'controllers/producto.controller.php';
 require_once 'controllers/categoria.controller.php';
 require_once 'controllers/marca.controller.php';
 require_once 'controllers/tipocliente.controller.php';
+require_once 'controllers/cliente.controller.php';
+
+require_once 'config/conexion.php';
 
 header('Content-Type: application/json');
 header("Access-Control-Allow-Origin: *");
