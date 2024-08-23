@@ -31,25 +31,16 @@ class ProductoController
 
         foreach ($filas as $datos) {
             // return json_encode($datos);
-            $this->producto = new Producto;
-            $this->producto->idproducto = $datos['idproducto'];
-
-            $this->producto->categoria = new Categoria;
-            $this->producto->categoria->idcategoria = $datos['idcategoria'];
-            $this->producto->categoria->nombre = $datos['categorias'];
-            $this->producto->categoria->descripcion = $datos['des_cat'];
-
-            $this->producto->marca = new Marca;
-            $this->producto->marca->idmarca = $datos['idmarca'];
-            $this->producto->marca->nombre = $datos['marcas'];
-            $this->producto->marca->descripcion = $datos['des_mar'];
-
-            $this->producto->nombre = $datos['nombre'];
-            $this->producto->cantidad = $datos['cantidad'];
-            $this->producto->precio = $datos['precio'];
-
-            $this->producto->idcategoria = $datos['idcategoria'];
-            $this->producto->idmarca = $datos['idmarca'];
+            $this->producto = new Producto(
+                $datos['idproducto'],
+                $datos['idcategoria'],
+                new Categoria($datos['idcategoria'], $datos['categorias'], $datos['des_cat']),
+                $datos['idmarca'],
+                new Marca($datos['idmarca'], $datos['marcas'], $datos['des_mar']),
+                $datos['nombre'],
+                $datos['cantidad'],
+                $datos['precio']
+            );
 
             $listado[] = $this->producto;
         }
@@ -77,26 +68,17 @@ class ProductoController
 
         $this->conexion = null;
 
-        $this->producto = new Producto;
         if ($dato !== null) {
-            $this->producto->idproducto = $dato['idproducto'];
-
-            $this->producto->categoria = new Categoria;
-            $this->producto->categoria->idcategoria = $dato['idcategoria'];
-            $this->producto->categoria->nombre = $dato['categorias'];
-            $this->producto->categoria->descripcion = $dato['des_cat'];
-
-            $this->producto->marca = new Marca;
-            $this->producto->marca->idmarca = $dato['idmarca'];
-            $this->producto->marca->nombre = $dato['marcas'];
-            $this->producto->marca->descripcion = $dato['des_mar'];
-
-            $this->producto->nombre = $dato['nombre'];
-            $this->producto->cantidad = $dato['cantidad'];
-            $this->producto->precio = $dato['precio'];
-
-            $this->producto->idcategoria = $dato['idcategoria'];
-            $this->producto->idmarca = $dato['idmarca'];
+            $this->producto = new Producto(
+                $dato['idproducto'],
+                $dato['idcategoria'],
+                new Categoria($dato['idcategoria'], $dato['categorias'], $dato['des_cat']),
+                $dato['idmarca'],
+                new Marca($dato['idmarca'], $dato['marcas'], $dato['des_mar']),
+                $dato['nombre'],
+                $dato['cantidad'],
+                $dato['precio']
+            );
 
             return json_encode($this->producto) ?? null;
         } else {
@@ -194,18 +176,19 @@ class ProductoController
         $sql->bindParam(':id', $id);
         $resultado = $sql->execute();
 
+        $this->conexion = null;
+
         if (!$resultado) {
-            echo json_encode(array(
+            return json_encode(array(
                 "codigo" => 500,
                 "mensaje" => "Error al Eliminar Producto",
             ));
         } else {
-            echo json_encode(array(
+            return json_encode(array(
                 "codigo" => 200,
                 "mensaje" => "Producto Eliminado",
             ));
         }
 
-        $this->conexion = null;
     }
 }

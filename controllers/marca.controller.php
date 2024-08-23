@@ -26,11 +26,11 @@ class MarcaController
 
         foreach ($filas as $datos) {
             // return json_encode($datos);
-            $this->marca = new Marca;
-
-            $this->marca->idmarca = $datos['idmarca'];
-            $this->marca->nombre = $datos['nombre'];
-            $this->marca->descripcion = $datos['descripcion'];
+            $this->marca = new Marca(
+                $datos['idmarca'],
+                $datos['nombre'],
+                $datos['descripcion'],
+            );
 
             $listado[] = $this->marca;
         }
@@ -53,11 +53,12 @@ class MarcaController
 
         $this->conexion = null;
 
-        $this->marca = new Marca();
         if ($dato !== null) {
-            $this->marca->idmarca = $dato['idmarca'];
-            $this->marca->nombre = $dato['nombre'];
-            $this->marca->descripcion = $dato['descripcion'];
+            $this->marca = new Marca(
+                $dato['idmarca'],
+                $dato['nombre'],
+                $dato['descripcion'],
+            );
 
             return json_encode($this->marca) ?? null;
         } else {
@@ -136,19 +137,19 @@ class MarcaController
         $sql->bindParam(':id', $id);
         $resultado = $sql->execute();
 
+        $this->conexion = null;
+
         if (!$resultado) {
-            echo json_encode(array(
+            return json_encode(array(
                 "codigo" => 500,
                 "mensaje" => "Error al Eliminar Marca",
             ));
         } else {
-            echo json_encode(array(
+            return json_encode(array(
                 "codigo" => 200,
                 "mensaje" => "Marca Eliminada",
             ));
         }
-
-        $this->conexion = null;
     }
 
 }

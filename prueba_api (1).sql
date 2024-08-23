@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 21-08-2024 a las 20:14:38
+-- Tiempo de generación: 23-08-2024 a las 16:55:23
 -- Versión del servidor: 8.0.30
 -- Versión de PHP: 8.1.10
 
@@ -118,7 +118,21 @@ INSERT INTO `producto` (`idproducto`, `idcategoria`, `idmarca`, `nombre`, `canti
 (17, 9, 7, 'Secador de Pelo Panasonic', 45, 59.99),
 (18, 9, 8, 'Plancha de Ropa Siemens', 25, 39.99),
 (19, 10, 9, 'Televisor Miele 55\"', 12, 799.99),
-(20, 10, 10, 'Sistema de Audio Sony', 15, 299.99);
+(20, 10, 10, 'Sistema de Audio Sony', 15, 299.99),
+(21, 1, 1, 'Raaaaa', 20, 799.99),
+(22, 6, 5, 'Paaaaa', 10, 2000);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tipocliente`
+--
+
+CREATE TABLE `tipocliente` (
+  `idtipocliente` int NOT NULL,
+  `nombre` varchar(100) NOT NULL,
+  `descripcion` varchar(500) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Índices para tablas volcadas
@@ -145,6 +159,12 @@ ALTER TABLE `producto`
   ADD KEY `idmarca` (`idmarca`);
 
 --
+-- Indices de la tabla `tipocliente`
+--
+ALTER TABLE `tipocliente`
+  ADD PRIMARY KEY (`idtipocliente`);
+
+--
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
@@ -164,7 +184,13 @@ ALTER TABLE `marca`
 -- AUTO_INCREMENT de la tabla `producto`
 --
 ALTER TABLE `producto`
-  MODIFY `idproducto` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `idproducto` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+
+--
+-- AUTO_INCREMENT de la tabla `tipocliente`
+--
+ALTER TABLE `tipocliente`
+  MODIFY `idtipocliente` int NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

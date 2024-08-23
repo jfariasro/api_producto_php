@@ -1,50 +1,43 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-    $marcaCTR = new MarcaController;
+    $tipoclienteCTR = new TipoClienteController;
     $id = (isset($rutas_filtro[3]) && is_numeric($rutas_filtro[3])) ? $rutas_filtro[3] : -1;
     if ($id !== -1) {
-        echo $marcaCTR->searchMarcas($id);
+        echo $tipoclienteCTR->searchTiposCliente($id);
     } else {
-        echo $marcaCTR->getMarcas();
+        echo $tipoclienteCTR->getTiposCliente();
     }
 } else if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $json = file_get_contents('php://input');
 
     $datos = json_decode($json, true);
 
-    // echo json_encode($datos);
-    // return;
-
-    $marcaCTR = new MarcaController;
-    echo $marcaCTR->postMarcas($datos);
-    // echo json_encode(array(
-    //     'menssage' => 'Este es el metodo post',
-    //     'method' => 'POST',
-    // ));
+    $tipoclienteCTR = new TipoClienteController;
+    echo $tipoclienteCTR->postTiposCliente($datos);
 } else if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
     $id = (isset($rutas_filtro[3]) && is_numeric($rutas_filtro[3])) ? intval($rutas_filtro[3]) : -1;
     $json = file_get_contents('php://input');
     $datos = json_decode($json, true);
     try {
-        $marcaCTR = new MarcaController;
+        $tipoclienteCTR = new TipoClienteController;
         if ($id !== -1) {
-            $obj = $marcaCTR->searchMarcas($id);
+            $obj = $tipoclienteCTR->searchTiposCliente($id);
             if (count(json_decode($obj, true)) == 0) {
                 echo json_encode(array(
-                    "error" => "La marca no existe",
+                    "error" => "El Tipo de Cliente no existe",
                     "codigo" => 404
                 ));
                 return;
-            } else if (intval($id) !== intval($datos['idmarca'])) {
+            } else if (intval($id) !== intval($datos['idtipocliente'])) {
                 echo json_encode(array(
-                    "error" => "El Id de marca no coincide",
+                    "error" => "El Id de tipo cliente no coincide",
                     "codigo" => 409,
                     "id" => $id,
                     "datos" => $datos
                 ));
                 return;
             }
-            echo $marcaCTR->putMarcas($id, $datos);
+            echo $tipoclienteCTR->putTiposCliente($id, $datos);
         } else {
             echo json_encode(array(
                 "error" => "El Id no es numérico",
@@ -64,17 +57,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 } else if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
     $id = (isset($rutas_filtro[3]) && is_numeric($rutas_filtro[3])) ? intval($rutas_filtro[3]) : -1;
     try {
-        $marcaCTR = new MarcaController;
+        $tipoclienteCTR = new TipoClienteController;
         if ($id !== -1) {
-            $obj = $marcaCTR->searchMarcas($id);
+            $obj = $tipoclienteCTR->searchTiposCliente($id);
             if (count(json_decode($obj, true)) == 0) {
                 echo json_encode(array(
-                    "error" => "La marca no existe",
+                    "error" => "El tipo cliente no existe",
                     "codigo" => 404
                 ));
                 return;
             }
-            echo $marcaCTR->deleteMarcas($id);
+            echo $tipoclienteCTR->deleteTiposCliente($id);
         } else {
             echo json_encode(array(
                 "error" => "El Id no es numérico",

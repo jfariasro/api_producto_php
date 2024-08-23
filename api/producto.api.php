@@ -111,7 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                 ));
                 return;
             }
-            return $productoCTR->deleteProductos($id);
+            echo $productoCTR->deleteProductos($id);
         } else {
             echo json_encode(array(
                 "error" => "El Id no es numérico",

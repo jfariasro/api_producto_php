@@ -3,10 +3,13 @@
 require_once 'models/categoria.model.php';
 require_once 'models/marca.model.php';
 require_once 'models/producto.model.php';
+require_once 'models/tipocliente.model.php';
+require_once 'models/cliente.model.php';
 
 require_once 'controllers/producto.controller.php';
 require_once 'controllers/categoria.controller.php';
 require_once 'controllers/marca.controller.php';
+require_once 'controllers/tipocliente.controller.php';
 
 header('Content-Type: application/json');
 header("Access-Control-Allow-Origin: *");
@@ -34,6 +37,7 @@ if ($numero_rutas == 1) {
         || $rutas_filtro[2] == 'categoria'
         || $rutas_filtro[2] == 'producto'
         || $rutas_filtro[2] == 'cliente'
+        || $rutas_filtro[2] == 'tipocliente'
     ) {
         require_once 'api/' . $rutas_filtro[2] . '.api.php';
     } else {

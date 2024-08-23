@@ -2,21 +2,21 @@
 
 require_once 'config/conexion.php';
 
-class CategoriaController
+class TipoClienteController
 {
     private $conexion;
     private $pdo;
-    private Categoria $categoria;
+    private TipoCliente $tipoCliente;
     public function __construct()
     {
         $this->pdo = new Conexion();
     }
 
-    public function getCategorias()
+    public function getTiposCliente()
     {
         $this->conexion = $this->pdo->getPdo();
 
-        $consulta = $this->conexion->prepare("SELECT * FROM categoria");
+        $consulta = $this->conexion->prepare("SELECT * FROM tipocliente");
         $consulta->execute();
         $filas = $consulta->fetchAll(PDO::FETCH_ASSOC);
 
@@ -26,13 +26,13 @@ class CategoriaController
 
         foreach ($filas as $datos) {
             // return json_encode($datos);
-            $this->categoria = new Categoria(
-                $datos['idcategoria'],
+            $this->tipoCliente = new TipoCliente(
+                $datos['idtipocliente'],
                 $datos['nombre'],
                 $datos['descripcion'],
             );
 
-            $listado[] = $this->categoria;
+            $listado[] = $this->tipoCliente;
         }
 
         $this->conexion = null;
@@ -40,11 +40,11 @@ class CategoriaController
         return json_encode($listado);
     }
 
-    public function searchCategorias($id)
+    public function searchTiposCliente($id)
     {
         $this->conexion = $this->pdo->getPdo();
 
-        $consulta = $this->conexion->prepare("SELECT * FROM categoria WHERE idcategoria = :id");
+        $consulta = $this->conexion->prepare("SELECT * FROM tipocliente WHERE idtipocliente = :id");
         $consulta->bindParam(':id', $id);
         $consulta->execute();
         $fila = $consulta->fetchAll(PDO::FETCH_ASSOC);
@@ -54,32 +54,32 @@ class CategoriaController
         $this->conexion = null;
 
         if ($dato !== null) {
-            $this->categoria = new Categoria(
-                $dato['idcategoria'],
+            $this->tipoCliente = new TipoCliente(
+                $dato['idtipocliente'],
                 $dato['nombre'],
                 $dato['descripcion'],
             );
 
-            return json_encode($this->categoria) ?? null;
+            return json_encode($this->tipoCliente) ?? null;
         } else {
             return json_encode(array());
         }
     }
 
-    public function postCategorias($datos)
+    public function postTiposCliente($datos)
     {
         $this->conexion = $this->pdo->getPdo();
 
-        $this->categoria = new Categoria(
+        $this->tipoCliente = new TipoCliente(
             0,
             $datos['nombre'],
             $datos['descripcion'],
         );
 
-        $sql = $this->conexion->prepare("INSERT INTO categoria(nombre, descripcion)
+        $sql = $this->conexion->prepare("INSERT INTO tipocliente(nombre, descripcion)
         VALUES (:nombre, :descripcion)");
-        $sql->bindParam(':nombre', $this->categoria->nombre, PDO::PARAM_STR);
-        $sql->bindParam(':descripcion', $this->categoria->descripcion, PDO::PARAM_STR);
+        $sql->bindParam(':nombre', $this->tipoCliente->nombre, PDO::PARAM_STR);
+        $sql->bindParam(':descripcion', $this->tipoCliente->descripcion, PDO::PARAM_STR);
         $resultado = $sql->execute();
 
         $this->conexion = null;
@@ -87,31 +87,31 @@ class CategoriaController
         if (!$resultado) {
             return json_encode(array(
                 "codigo" => 500,
-                "mensaje" => "Error al Registrar Categoria",
+                "mensaje" => "Error al Registrar Tipo de Cliente",
             ));
         } else {
             return json_encode(array(
                 "codigo" => 200,
-                "mensaje" => "Categoria Registrada",
+                "mensaje" => "Tipo de Cliente Registrado",
             ));
         }
     }
 
-    public function putCategorias($id, $datos)
+    public function putTiposCliente($id, $datos)
     {
         $this->conexion = $this->pdo->getPdo();
 
-        $this->categoria = new Categoria(
-            $datos['idcategoria'],
+        $this->tipoCliente = new TipoCliente(
+            $datos['idtipocliente'],
             $datos['nombre'],
             $datos['descripcion'],
         );
 
-        $sql = $this->conexion->prepare("UPDATE categoria SET nombre = :nombre,
-        descripcion = :descripcion WHERE idcategoria = :id");
+        $sql = $this->conexion->prepare("UPDATE tipocliente SET nombre = :nombre,
+        descripcion = :descripcion WHERE idtipocliente = :id");
         $sql->bindParam(':id', $id);
-        $sql->bindParam(':nombre', $this->categoria->nombre, PDO::PARAM_STR);
-        $sql->bindParam(':descripcion', $this->categoria->descripcion, PDO::PARAM_STR);
+        $sql->bindParam(':nombre', $this->tipoCliente->nombre, PDO::PARAM_STR);
+        $sql->bindParam(':descripcion', $this->tipoCliente->descripcion, PDO::PARAM_STR);
         $resultado = $sql->execute();
 
         $this->conexion = null;
@@ -119,21 +119,21 @@ class CategoriaController
         if (!$resultado) {
             return json_encode(array(
                 "codigo" => 500,
-                "mensaje" => "Error al Actualizar Categoria",
+                "mensaje" => "Error al Actualizar Tipo de Cliente",
             ));
         } else {
             return json_encode(array(
                 "codigo" => 200,
-                "mensaje" => "Categoria Actualizada",
+                "mensaje" => "Tipo de Cliente Actualizado",
             ));
         }
     }
 
-    public function deleteCategorias($id)
+    public function deleteTiposCliente($id)
     {
         $this->conexion = $this->pdo->getPdo();
 
-        $sql = $this->conexion->prepare("DELETE FROM categoria WHERE idcategoria = :id");
+        $sql = $this->conexion->prepare("DELETE FROM tipocliente WHERE idtipocliente = :id");
         $sql->bindParam(':id', $id);
         $resultado = $sql->execute();
 
@@ -142,12 +142,12 @@ class CategoriaController
         if (!$resultado) {
             return json_encode(array(
                 "codigo" => 500,
-                "mensaje" => "Error al Eliminar Categoria",
+                "mensaje" => "Error al Eliminar Tipo de Cliente",
             ));
         } else {
             return json_encode(array(
                 "codigo" => 200,
-                "mensaje" => "Categoria Eliminada",
+                "mensaje" => "Tipo de Cliente Eliminado",
             ));
         }
     }

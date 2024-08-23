@@ -74,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                 ));
                 return;
             }
-            return $categoriaCTR->deleteCategorias($id);
+            echo $categoriaCTR->deleteCategorias($id);
         } else {
             echo json_encode(array(
                 "error" => "El Id no es numérico",
